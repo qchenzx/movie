@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chenzx.movie.mapper.sys.SysUserMapper">
+
+    <resultMap id="roleBaseMap" type="com.chenzx.movie.entity.sys.PathRoleMapping">
+        <id property="path" column="path"/>
+        <collection property="roles" ofType="string">
+            <result column="role"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryPathRequiredRole" resultMap="roleBaseMap">
+        select p.path, r.value as role
+        from sys_role_path as s
+                 right join sys_path as p on s.path_id = p.id
+                 left join sys_role as r on s.role_id = r.id
+        order by p.priority desc
+    </select>
+
+</mapper>

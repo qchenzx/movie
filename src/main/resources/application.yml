@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: movie
+  datasource:
+    url: jdbc:mysql://192.168.31.100:3306/movie?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    druid:
+      max-active: 20
+      initial-size: 5
+      max-wait: 6000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      async-init: true
+server:
+  port: 8080
+security:
+  login-url: /sys/user/login
+  logout-url: /sys/user/logout
+  default-role-after-registration: ROLE_user
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: del_flag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
