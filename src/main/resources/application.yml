@@ -24,6 +24,8 @@ security:
   login-url: /sys/user/login
   logout-url: /sys/user/logout
   default-role-after-registration: ROLE_user
+local-file:
+  img-path: D:\movie_file
 mybatis-plus:
   global-config:
     db-config:

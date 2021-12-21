@@ -3,8 +3,6 @@ package com.chenzx.movie.service.movie;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chenzx.movie.entity.movie.MovieInfoDo;
-import com.chenzx.movie.entity.movie.MovieInfoVo;
-import org.springframework.stereotype.Service;
 
 /**
  * @author ChenZexuan
@@ -24,9 +22,18 @@ public interface IMovieService {
 
     /**
      * 查询所有的电影列表
+     *
      * @param page 分页对象
      * @return 查询结果
      */
     IPage<MovieInfoDo> queryAllMovieInfo(Page<MovieInfoDo> page);
+
+    /**
+     * 通过电影的ID获取电影的封面图片
+     *
+     * @param movieId 电影id
+     * @return base64加密后的图片
+     */
+    byte[] getMovieCoverImgById(Long movieId);
 
 }

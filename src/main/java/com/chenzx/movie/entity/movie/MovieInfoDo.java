@@ -7,11 +7,12 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
  * movie_info
- * @author
+ * @author chenzx
  */
 @Data
 @TableName("movie_info")
@@ -40,6 +41,7 @@ public class MovieInfoDo implements Serializable {
     /**
      * 电影上映时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd日 HH:mm", timezone = "GMT+8")
     private Date date;
 
     /**
