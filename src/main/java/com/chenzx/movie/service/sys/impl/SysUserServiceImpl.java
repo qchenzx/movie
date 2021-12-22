@@ -47,6 +47,11 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void register(RegisterParam param) {
+        QueryWrapper<IUserDo> iUserQueryWrapper = new QueryWrapper<>();
+        iUserQueryWrapper.eq("account", param.getAccount());
+        if (iUserMapper.selectOne(iUserQueryWrapper) == null) {
+            throw new BusException("账号已存在!");
+        }
         IUserDo iUserDo = new IUserDo();
         iUserDo.setAccount(param.getAccount());
         iUserDo.setNickname(param.getNickname());

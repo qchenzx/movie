@@ -50,6 +50,10 @@ public class IUserDo {
      */
     private Date createDate;
     /**
+     * 用户积分
+     */
+    private Long integral;
+    /**
      * 是否启用
      */
     private Boolean enabled = true;
@@ -69,6 +73,7 @@ public class IUserDo {
         iUser.setNickname(nickname);
         iUser.setId(id);
         iUser.setAvatar(avatar);
+        iUser.setIntegral(integral);
         return iUser;
     }
 }

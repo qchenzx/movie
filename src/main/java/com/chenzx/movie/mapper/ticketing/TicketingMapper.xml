@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chenzx.movie.mapper.ticketing.TicketingMapper">
+
+    <select id="selectMovieHallInfoByMovieId" resultMap="MovieHallMap">
+        select i.name as movie_name,
+               h.id   as hall_id,
+               h.row_total,
+               h.col_total,
+               s.id,
+               s.row_location,
+               s.col_location,
+               s.type,
+               s.is_sold
+        from movie_hall as h
+                 left join movie_info as i on h.info_id = i.id
+                 left join movie_seat as s on h.id = s.hall_id
+        where i.id = #{movieId}
+    </select>
+
+    <resultMap id="MovieHallMap" type="com.chenzx.movie.entity.ticketing.MovieHallInfo">
+        <id property="id" column="hall_id"/>
+        <result property="rowTotal" column="row_total"/>
+        <result property="colTotal" column="col_total"/>
+        <result property="movieName" column="movie_name"/>
+        <collection property="seats" ofType="com.chenzx.movie.entity.ticketing.MovieSeat">
+            <id property="id" column="id"/>
+            <result property="rowLocation" column="row_location"/>
+            <result property="colLocation" column="col_location"/>
+            <result property="isSold" column="is_sold"/>
+            <result property="type" column="type"/>
+        </collection>
+    </resultMap>
+
+</mapper>

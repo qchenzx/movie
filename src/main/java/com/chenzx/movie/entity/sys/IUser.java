@@ -51,6 +51,10 @@ public class IUser implements UserDetails {
     @JsonFormat(pattern = "yyyy年MM月dd日 HH:mm", timezone = "GMT+8")
     private Date createDate;
     /**
+     * 用户积分
+     */
+    private Long integral;
+    /**
      * 是否启用
      */
     private Boolean enabled = true;
