@@ -58,7 +58,7 @@ public class MovieServiceImpl implements IMovieService {
         if (SortingRulesEnum.TIME.getValue().equals(orderBy)) {
             movieInfoQueryWrapper.orderByDesc(MovieInfoDo::getDate);
         } else if (SortingRulesEnum.EVALUATE.getValue().equals(orderBy)) {
-            movieInfoQueryWrapper.orderByDesc(MovieInfoDo::getCast);
+            movieInfoQueryWrapper.orderByDesc(MovieInfoDo::getRatio);
         } else {
             throw new BusException("排序字段错误");
         }
