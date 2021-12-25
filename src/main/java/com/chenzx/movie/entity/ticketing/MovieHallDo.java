@@ -20,17 +20,18 @@ public class MovieHallDo implements Serializable {
      */
     @TableId(value = "id",type = IdType.ASSIGN_UUID)
     private String id;
-
     /**
      * 影厅座位行
      */
     private Integer rowTotal;
-
     /**
      * 影厅座位列
      */
     private Integer colTotal;
-
+    /**
+     * 单价
+     */
+    private Long price = 4500L;
     /**
      * 电影主键
      */

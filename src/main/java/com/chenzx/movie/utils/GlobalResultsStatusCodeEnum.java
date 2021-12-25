@@ -34,7 +34,11 @@ public enum GlobalResultsStatusCodeEnum {
     /**
      * 无权限访问
      */
-    SECURITY_NO_ACCESS(-6);
+    SECURITY_NO_ACCESS(-6),
+    /**
+     * 请求参数错误
+     */
+    REQUEST_PARAMETER_ERROR(-7);
 
 
     private final Integer value;

@@ -7,6 +7,7 @@
                h.id   as hall_id,
                h.row_total,
                h.col_total,
+               h.price,
                s.id,
                s.row_location,
                s.col_location,
@@ -16,6 +17,7 @@
                  left join movie_info as i on h.info_id = i.id
                  left join movie_seat as s on h.id = s.hall_id
         where i.id = #{movieId}
+        order by s.row_location, col_location
     </select>
 
     <resultMap id="MovieHallMap" type="com.chenzx.movie.entity.ticketing.MovieHallInfo">
@@ -23,6 +25,7 @@
         <result property="rowTotal" column="row_total"/>
         <result property="colTotal" column="col_total"/>
         <result property="movieName" column="movie_name"/>
+        <result property="price" column="price"/>
         <collection property="seats" ofType="com.chenzx.movie.entity.ticketing.MovieSeat">
             <id property="id" column="id"/>
             <result property="rowLocation" column="row_location"/>
@@ -31,5 +34,4 @@
             <result property="type" column="type"/>
         </collection>
     </resultMap>
-
 </mapper>

@@ -1,14 +1,16 @@
 package com.chenzx.movie.controller;
 
 import com.chenzx.movie.config.exception.BusException;
+import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.entity.ticketing.MovieHallInfo;
+import com.chenzx.movie.entity.ticketing.MovieSeatParam;
 import com.chenzx.movie.service.ticketing.ITicketingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author ChenZexuan
@@ -29,6 +31,13 @@ public class TicketingController {
             throw new BusException("电影主键不能为空");
         }
         return ticketingService.getTicketingInfoByMovieId(movieId);
+    }
+
+    @PostMapping
+    public String submitSeat(@Valid @RequestBody MovieSeatParam seatParams
+            , @AuthenticationPrincipal IUser user) {
+        ticketingService.submitSeat(seatParams, user);
+        return "座位锁定成功!";
     }
 
 }

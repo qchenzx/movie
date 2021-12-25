@@ -1,11 +1,13 @@
 package com.chenzx.movie.service.movie.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.movie.MovieCoverDo;
 import com.chenzx.movie.entity.movie.MovieInfoDo;
+import com.chenzx.movie.entity.movie.SortingRulesEnum;
 import com.chenzx.movie.mapper.movie.MovieCoverMapper;
 import com.chenzx.movie.mapper.movie.MovieInfoMapper;
 import com.chenzx.movie.service.movie.IMovieService;
@@ -18,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Base64;
 
 /**
  * @author ChenZexuan
@@ -37,15 +38,31 @@ public class MovieServiceImpl implements IMovieService {
     private String imgPath;
 
     @Override
-    public IPage<MovieInfoDo> fuzzyQueryMovieInfo(Page<MovieInfoDo> page, String movieName) {
+    public IPage<MovieInfoDo> fuzzyQueryMovieInfo(Page<MovieInfoDo> page, String movieName, Integer orderBy) {
         QueryWrapper<MovieInfoDo> movieInfoQueryWrapper = new QueryWrapper<>();
         movieInfoQueryWrapper.like("name", movieName);
+        if (SortingRulesEnum.TIME.getValue().equals(orderBy)) {
+            movieInfoQueryWrapper.orderByDesc("date");
+        } else if (SortingRulesEnum.EVALUATE.getValue().equals(orderBy)) {
+            movieInfoQueryWrapper.orderByDesc("ratio");
+        } else {
+            throw new BusException("排序字段错误");
+        }
         return infoMapper.selectPage(page, movieInfoQueryWrapper);
     }
 
     @Override
-    public IPage<MovieInfoDo> queryAllMovieInfo(Page<MovieInfoDo> page) {
-        return infoMapper.selectPage(page, null);
+    public IPage<MovieInfoDo> queryAllMovieInfo(Page<MovieInfoDo> page, Integer orderBy) {
+        LambdaQueryWrapper<MovieInfoDo> movieInfoQueryWrapper = new LambdaQueryWrapper<>();
+
+        if (SortingRulesEnum.TIME.getValue().equals(orderBy)) {
+            movieInfoQueryWrapper.orderByDesc(MovieInfoDo::getDate);
+        } else if (SortingRulesEnum.EVALUATE.getValue().equals(orderBy)) {
+            movieInfoQueryWrapper.orderByDesc(MovieInfoDo::getCast);
+        } else {
+            throw new BusException("排序字段错误");
+        }
+        return infoMapper.selectPage(page, movieInfoQueryWrapper);
     }
 
     @SneakyThrows

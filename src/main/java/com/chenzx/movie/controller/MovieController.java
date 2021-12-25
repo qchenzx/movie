@@ -24,16 +24,18 @@ public class MovieController {
     private MovieServiceImpl movieService;
 
     @GetMapping
-    public IPage<MovieInfoDo> getMovieInfo(Page<MovieInfoDo> page, @RequestParam(required = false) String movieName) {
+    public IPage<MovieInfoDo> getMovieInfo(Page<MovieInfoDo> page
+            , @RequestParam(required = false) String movieName
+            , @RequestParam(required = false) Integer orderBy) {
         if (StrUtil.isBlank(movieName)) {
-            return movieService.queryAllMovieInfo(page);
+            return movieService.queryAllMovieInfo(page,orderBy);
         }
-        return movieService.fuzzyQueryMovieInfo(page,movieName);
+        return movieService.fuzzyQueryMovieInfo(page, movieName, orderBy);
     }
 
-    @GetMapping(value = {"img/{movieId}","img"})
-    public byte[] getMovieCoverImg(@PathVariable(required = false) Long movieId){
-        if(movieId == null){
+    @GetMapping(value = {"img/{movieId}", "img"})
+    public byte[] getMovieCoverImg(@PathVariable(required = false) Long movieId) {
+        if (movieId == null) {
             throw new BusException("电影id不能为空!");
         }
         return movieService.getMovieCoverImgById(movieId);

@@ -17,7 +17,7 @@ class MovieServiceImplTest {
 
     @Test
     void queryAllMovieInfo() {
-        IPage<MovieInfoDo> movieInfoDoIPage = movieService.queryAllMovieInfo(new Page<>(1, 10));
+        IPage<MovieInfoDo> movieInfoDoIPage = movieService.queryAllMovieInfo(new Page<>(1, 10),1);
         System.out.println();
     }
 }

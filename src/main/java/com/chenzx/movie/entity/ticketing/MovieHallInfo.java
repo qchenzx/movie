@@ -28,6 +28,10 @@ public class MovieHallInfo {
      */
     private String movieName;
     /**
+     * 电影票单价
+     */
+    private Long price;
+    /**
      * 座位信息
      */
     private List<MovieSeat> seats;
