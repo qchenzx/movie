@@ -1,4 +1,4 @@
-package com.chenzx.movie.controller.sys;
+package com.chenzx.movie.controller;
 
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.sys.IUser;

@@ -54,6 +54,10 @@ public class IUserDo {
      */
     private Long integral;
     /**
+     * 用户手机号码
+     */
+    private String phoneNumber;
+    /**
      * 是否启用
      */
     private Boolean enabled = true;
@@ -74,6 +78,7 @@ public class IUserDo {
         iUser.setId(id);
         iUser.setAvatar(avatar);
         iUser.setIntegral(integral);
+        iUser.setPhoneNumber(phoneNumber);
         return iUser;
     }
 }

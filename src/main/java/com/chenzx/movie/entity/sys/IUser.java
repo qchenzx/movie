@@ -55,6 +55,10 @@ public class IUser implements UserDetails {
      */
     private Long integral;
     /**
+     * 用户手机号码
+     */
+    private String phoneNumber;
+    /**
      * 是否启用
      */
     private Boolean enabled = true;

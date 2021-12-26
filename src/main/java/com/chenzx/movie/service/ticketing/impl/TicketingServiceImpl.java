@@ -3,7 +3,9 @@ package com.chenzx.movie.service.ticketing.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.sys.IUser;
+import com.chenzx.movie.entity.sys.IUserDo;
 import com.chenzx.movie.entity.ticketing.*;
+import com.chenzx.movie.mapper.sys.IUserMapper;
 import com.chenzx.movie.mapper.ticketing.MovieHallMapper;
 import com.chenzx.movie.mapper.ticketing.MovieOrderMapper;
 import com.chenzx.movie.mapper.ticketing.MovieSeatMapper;
@@ -31,6 +33,8 @@ public class TicketingServiceImpl implements ITicketingService {
     private MovieSeatMapper movieSeatMapper;
     @Autowired
     private MovieOrderMapper movieOrderMapper;
+    @Autowired
+    private IUserMapper userMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -50,10 +54,23 @@ public class TicketingServiceImpl implements ITicketingService {
         if (movieHallDo == null) {
             throw new BusException("没有查询到放映场次信息,请刷新后重新尝试");
         }
-        List<MovieSeatLocation> seats = param.getSeats();
+        IUserDo iUser = userMapper.selectById(user.getId());
+        Long total = movieHallDo.getPrice() * param.getSeats().size();
+        if (iUser.getIntegral() < total) {
+            throw new BusException("余额不足!");
+        }
+        iUser.setIntegral(iUser.getIntegral() - total);
+        userMapper.updateById(iUser);
 
-        for (MovieSeatLocation location : seats) {
-            if (isSeatsSold(location.getSeatId(), location.getRow(), location.getCol())) {
+
+        MovieOrder movieOrder = new MovieOrder();
+        movieOrder.setUserId(iUser.getId());
+        movieOrder.setMobileNumber(iUser.getPhoneNumber());
+        movieOrder.setTotalPrice(total);
+        movieOrderMapper.insert(movieOrder);
+
+        for (MovieSeatLocation location : param.getSeats()) {
+            if (isSeatsSold(location.getRow(), location.getCol(), param.getHallId())) {
                 throw new BusException("座位已售出!请刷新后重新尝试购买");
             }
             MovieSeatDo movieSeat = new MovieSeatDo();
@@ -62,13 +79,8 @@ public class TicketingServiceImpl implements ITicketingService {
             movieSeat.setColLocation(location.getCol());
             movieSeat.setType(TicketingSeatEnum.NORMAL_SEAT.getType());
             movieSeat.setHallId(param.getHallId());
+            movieSeat.setOrderId(movieOrder.getId());
             movieSeatMapper.insert(movieSeat);
-
-            String seatId = movieSeat.getId();
-            MovieOrder movieOrder = new MovieOrder();
-            movieOrder.setSeatId(seatId);
-            movieOrder.setUserId(user.getId());
-            movieOrderMapper.insert(movieOrder);
         }
     }
 
@@ -79,18 +91,13 @@ public class TicketingServiceImpl implements ITicketingService {
      * @param col 座位座
      * @return 座位是否被售出
      */
-    private Boolean isSeatsSold(String id, Integer row, Integer col) {
-        MovieSeatDo movieSeat = movieSeatMapper.selectById(id);
-        if (movieSeat == null) {
-            MovieSeatDo hasMovieSeat = movieSeatMapper.selectOne(
-                    new LambdaQueryWrapper<MovieSeatDo>()
-                            .eq(MovieSeatDo::getRowLocation, row)
-                            .eq(MovieSeatDo::getColLocation, col));
-            if (hasMovieSeat == null) {
-                return false;
-            }
-        }
-        return true;
+    private Boolean isSeatsSold(Integer row, Integer col, String hallId) {
+        MovieSeatDo hasMovieSeat = movieSeatMapper.selectOne(
+                new LambdaQueryWrapper<MovieSeatDo>()
+                        .eq(MovieSeatDo::getRowLocation, row)
+                        .eq(MovieSeatDo::getColLocation, col)
+                        .eq(MovieSeatDo::getHallId, hallId));
+        return hasMovieSeat != null && hasMovieSeat.getIsSold();
     }
 
     private void addMovieHallSeatLayout(Long movieId) {

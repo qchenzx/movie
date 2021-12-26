@@ -22,22 +22,22 @@ public class MovieOrder implements Serializable {
      */
     @TableId(type = IdType.ASSIGN_UUID)
     private String id;
-
     /**
      * 订单状态
      */
     private Integer status = MovieOrderStatusEnum.SUBMITTED.getValue();
-
-    /**
-     * 座位主键
-     */
-    private String seatId;
-
     /**
      * 用户主键
      */
     private Long userId;
-
+    /**
+     * 手机号
+     */
+    private String mobileNumber;
+    /**
+     * 总价
+     */
+    private Long totalPrice;
     /**
      *  创建订单时间
      */

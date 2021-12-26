@@ -20,31 +20,30 @@ public class MovieSeatDo implements Serializable {
      */
     @TableId(type = IdType.ASSIGN_UUID)
     private String id;
-
     /**
      * 行
      */
     private Integer rowLocation;
-
     /**
      * 列
      */
     private Integer colLocation;
-
     /**
      * 座位类型
      */
     private Integer type;
-
     /**
      * 是否已经售出
      */
     private Boolean isSold;
-
     /**
      * 电影选座信息主键
      */
     private String hallId;
+    /**
+     * 订单主键
+     */
+    private String orderId;
 
     private static final long serialVersionUID = 1L;
 }

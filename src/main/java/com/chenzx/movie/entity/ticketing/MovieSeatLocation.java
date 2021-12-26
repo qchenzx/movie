@@ -12,11 +12,6 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 public class MovieSeatLocation {
-
-    /**
-     * 座位主键
-     */
-    private String seatId;
     /**
      * 行
      */

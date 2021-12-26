@@ -37,7 +37,7 @@ public class TicketingController {
     public String submitSeat(@Valid @RequestBody MovieSeatParam seatParams
             , @AuthenticationPrincipal IUser user) {
         ticketingService.submitSeat(seatParams, user);
-        return "座位锁定成功!";
+        return "购买成功!";
     }
 
 }
