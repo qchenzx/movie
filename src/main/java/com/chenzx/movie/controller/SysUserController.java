@@ -1,6 +1,7 @@
 package com.chenzx.movie.controller;
 
 import com.chenzx.movie.config.exception.BusException;
+import com.chenzx.movie.entity.sys.ChangePassordParam;
 import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.entity.sys.RegisterParam;
 import com.chenzx.movie.entity.sys.UserInfo;
@@ -35,5 +36,11 @@ public class SysUserController {
             throw new BusException("当前未登录!");
         }
         return sysUserService.getUserInfoByIUser(iUser);
+    }
+
+    @PostMapping(value = "/changePassword")
+    public String changePassword(@Valid @RequestBody ChangePassordParam param, @AuthenticationPrincipal IUser iUser) {
+        sysUserService.changePassword(param,iUser);
+        return "修改密码成功!";
     }
 }

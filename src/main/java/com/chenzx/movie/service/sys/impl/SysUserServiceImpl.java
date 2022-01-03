@@ -81,4 +81,19 @@ public class SysUserServiceImpl implements ISysUserService {
         userInfo.setUserGroupName(sysRole.getName());
         return userInfo;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void changePassword(ChangePassordParam param, IUser iUser) {
+        IUserDo user = iUserMapper.selectById(iUser.getId());
+        if (user == null) {
+            log.error("无法从数据库中查询到用户信息");
+            throw new BusException("出错了,请联系管理员!");
+        }
+        if (!passwordEncoder.matches(param.getOldPassword(), user.getPassword())) {
+            throw new BusException("原密码错误,请检查后重新输入!");
+        }
+        user.setPassword(passwordEncoder.encode(param.getNewPassword()));
+        iUserMapper.updateById(user);
+    }
 }
