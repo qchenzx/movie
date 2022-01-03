@@ -1,8 +1,11 @@
 package com.chenzx.movie.service.sys.impl;
 
 import com.chenzx.movie.entity.sys.CityList;
+import com.chenzx.movie.entity.sys.LonLatParam;
 import com.chenzx.movie.entity.sys.SysCityDo;
+import com.chenzx.movie.entity.sys.SysRegionArea;
 import com.chenzx.movie.mapper.sys.SysCityMapper;
+import com.chenzx.movie.mapper.sys.SysRegionAreaMapper;
 import com.chenzx.movie.service.sys.ISysService;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class SysServiceImpl implements ISysService {
 
     @Autowired
     private SysCityMapper cityMapper;
+    @Autowired
+    private SysRegionAreaMapper regionAreaMapper;
 
     @Override
     @Cacheable(cacheNames = "movie")
@@ -38,5 +43,10 @@ public class SysServiceImpl implements ISysService {
             cityLists.add(cityList);
         }
         return cityLists;
+    }
+
+    @Override
+    public SysRegionArea getLocation(LonLatParam paramBean) {
+        return regionAreaMapper.queryNearestPoint(paramBean);
     }
 }

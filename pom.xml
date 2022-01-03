@@ -80,7 +80,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.17</version>
+            <version>5.7.18</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -95,6 +95,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.22.0.ALL</version>
         </dependency>
     </dependencies>
 
