@@ -31,7 +31,7 @@ public class SysServiceImpl implements ISysService {
     private SysRegionAreaMapper regionAreaMapper;
 
     @Override
-    @Cacheable(cacheNames = "movie")
+    @Cacheable(cacheNames = "movie_city")
     public List<CityList> getCityList() {
         List<SysCityDo> sysCityDos = cityMapper.selectList(null);
         Map<String, List<SysCityDo>> collect = sysCityDos.stream().collect(Collectors.groupingBy(SysCityDo::getInitials));

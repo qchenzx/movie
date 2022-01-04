@@ -114,7 +114,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                     resp.setContentType("application/json;charset=utf-8");
                     resp.getWriter().write(new ObjectMapper().writeValueAsString(GlobalResultsUtil.isOk("退出登录成功")));
                 })
-                .deleteCookies("JSESSIONID", "cloud_token")
+                .deleteCookies("JSESSIONID", "movie_account")
                 .and()
                 .csrf().disable()
                 .cors().disable();
