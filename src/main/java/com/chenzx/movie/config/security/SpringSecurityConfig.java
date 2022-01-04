@@ -112,7 +112,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl(userLogoutUrl)
                 .logoutSuccessHandler((req, resp, authentication) -> {
                     resp.setContentType("application/json;charset=utf-8");
-                    resp.getWriter().write(new ObjectMapper().writeValueAsString(GlobalResultsUtil.isOk(null)));
+                    resp.getWriter().write(new ObjectMapper().writeValueAsString(GlobalResultsUtil.isOk("退出登录成功")));
                 })
                 .deleteCookies("JSESSIONID", "cloud_token")
                 .and()
