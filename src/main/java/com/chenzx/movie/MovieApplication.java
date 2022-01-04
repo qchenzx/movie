@@ -20,8 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @version 1.0
  * @date 2021/12/7 13:42
  */
-@SpringBootApplication
 @EnableCaching
+@SpringBootApplication
 @MapperScan("com.chenzx.movie.mapper")
 public class MovieApplication {
 

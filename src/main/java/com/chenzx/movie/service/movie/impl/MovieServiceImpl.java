@@ -65,7 +65,9 @@ public class MovieServiceImpl implements IMovieService {
     public IPage<MovieInfoDo> queryAllMovieInfo(MovieInfoParam param, Page<MovieInfoDo> page) {
         LambdaQueryWrapper<MovieInfoDo> movieInfoQueryWrapper = new LambdaQueryWrapper<>();
         List<Long> movieInfo = getMoviePrimaryKeyUnderCategory(param.getType());
-        movieInfoQueryWrapper.inSql(MovieInfoDo::getId, Joiner.on(",").join(movieInfo));
+        if (movieInfo != null) {
+            movieInfoQueryWrapper.inSql(MovieInfoDo::getId, Joiner.on(",").join(movieInfo));
+        }
         if (SortingRulesEnum.TIME.getValue().equals(param.getOrderBy())) {
             movieInfoQueryWrapper.orderByDesc(MovieInfoDo::getDate);
         } else if (SortingRulesEnum.EVALUATE.getValue().equals(param.getOrderBy())) {

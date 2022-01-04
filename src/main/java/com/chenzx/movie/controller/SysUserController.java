@@ -6,6 +6,8 @@ import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.entity.sys.RegisterParam;
 import com.chenzx.movie.entity.sys.UserInfo;
 import com.chenzx.movie.service.sys.ISysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +21,13 @@ import javax.validation.Valid;
  */
 @RequestMapping(value = "/sys/user/")
 @RestController
+@Api(tags = "用户管理接口")
 public class SysUserController {
 
     @Autowired
     private ISysUserService sysUserService;
 
+    @ApiOperation(value = "用户注册接口")
     @PostMapping(value = "/register/")
     public String register(@RequestBody @Valid RegisterParam param) {
         sysUserService.register(param);

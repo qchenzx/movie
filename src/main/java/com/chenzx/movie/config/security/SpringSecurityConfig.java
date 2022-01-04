@@ -6,6 +6,7 @@ import com.chenzx.movie.utils.GlobalResultsUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +22,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 /**
  * @author ChenZexuan
@@ -45,6 +48,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AccessDecisionManager accessDecisionManager;
 
+    @Bean
+    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        //此处可添加别的规则,目前只设置 允许双 //
+        firewall.setAllowUrlEncodedDoubleSlash(true);
+        return firewall;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
