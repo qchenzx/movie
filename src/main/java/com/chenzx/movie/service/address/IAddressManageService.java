@@ -36,4 +36,12 @@ public interface IAddressManageService {
      */
     void editAddress(EditAddressParam param, IUser user);
 
+    /**
+     * 删除收获地址接口
+     *
+     * @param addressId 要删除的收货地址主键
+     * @param user      用户对象
+     */
+    void deleteAddress(String addressId, IUser user);
+
 }

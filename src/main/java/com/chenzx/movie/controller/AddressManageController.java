@@ -57,4 +57,14 @@ public class AddressManageController {
         return "修改成功!";
     }
 
+    @ApiOperation(value = "删除收货地址接口", notes = "删除指定的收货地址")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "addressId", value = "要删除的收货地址主键", paramType = "query", dataType = "String")
+    })
+    @DeleteMapping(value = "/delete")
+    public String deleteAddress(@RequestParam String addressId, @ApiIgnore @AuthenticationPrincipal IUser iUser) {
+        addressManageService.deleteAddress(addressId, iUser);
+        return "删除成功!";
+    }
+
 }

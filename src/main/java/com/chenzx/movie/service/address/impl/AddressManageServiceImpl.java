@@ -68,4 +68,15 @@ public class AddressManageServiceImpl implements IAddressManageService {
         address.setZipCode(param.getZipCode());
         addressMapper.updateById(address);
     }
+
+    @Override
+    public void deleteAddress(String addressId, IUser user) {
+        Long userId = user.getId();
+        AddressDo address = addressMapper.selectOne(
+                new LambdaQueryWrapper<AddressDo>().eq(AddressDo::getId, addressId).eq(AddressDo::getUserId, userId));
+        if (address == null) {
+            throw new BusException("未找到要删除的收获地址,请联系管理员");
+        }
+        addressMapper.deleteById(addressId);
+    }
 }
