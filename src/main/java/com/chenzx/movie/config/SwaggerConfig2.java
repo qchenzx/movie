@@ -1,6 +1,7 @@
 package com.chenzx.movie.config;
 
 import com.google.common.base.Predicates;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -30,7 +31,7 @@ public class SwaggerConfig2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.chenzx.movie.controller"))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build().apiInfo(new ApiInfoBuilder()
                         .title("电影项目后端开放接口说明文档")
@@ -40,24 +41,5 @@ public class SwaggerConfig2 {
                         .license("The Apache License")
                         .build())
                 .useDefaultResponseMessages(false);
-    }
-
-    private List<SecurityContext> securityContexts() {
-        List<SecurityContext> securityContexts = new ArrayList<>();
-        securityContexts.add(
-                SecurityContext.builder()
-                        .securityReferences(defaultAuth())
-                        .forPaths(PathSelectors.regex("^(?!auth).*$"))
-                        .build());
-        return securityContexts;
-    }
-
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        List<SecurityReference> securityReferences = new ArrayList<>();
-        securityReferences.add(new SecurityReference("Authorization", authorizationScopes));
-        return securityReferences;
     }
 }

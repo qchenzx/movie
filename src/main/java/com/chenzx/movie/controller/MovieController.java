@@ -25,7 +25,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/12/20 11:12
  */
-@Api(tags = "电影信息处理")
+@Api(tags = "电影信息处理接口")
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/movie")

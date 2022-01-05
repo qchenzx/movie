@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author ChenZexuan
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @date 2021/12/7 13:42
  */
 @EnableCaching
+@EnableSwagger2
 @SpringBootApplication
 @MapperScan("com.chenzx.movie.mapper")
 public class MovieApplication {
