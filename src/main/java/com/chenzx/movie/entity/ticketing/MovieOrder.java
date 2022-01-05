@@ -1,13 +1,12 @@
 package com.chenzx.movie.entity.ticketing;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author ChenZexuan
@@ -17,6 +16,7 @@ import lombok.Data;
 @Data
 @TableName("movie_order")
 public class MovieOrder implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 订单主键
      */
@@ -39,9 +39,7 @@ public class MovieOrder implements Serializable {
      */
     private Long totalPrice;
     /**
-     *  创建订单时间
+     * 创建订单时间
      */
     private Date createTime = new Date();
-
-    private static final long serialVersionUID = 1L;
 }

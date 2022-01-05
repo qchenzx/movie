@@ -17,7 +17,7 @@ public class TicketingInfoVo {
     /**
      * 票价单价
      */
-    private Long  price;
+    private Long price;
     /**
      * 电影厅
      */

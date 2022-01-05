@@ -1,7 +1,6 @@
 package com.chenzx.movie.mapper.ticketing;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.chenzx.movie.entity.ticketing.MovieSeat;
 import com.chenzx.movie.entity.ticketing.MovieSeatDo;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -17,11 +17,11 @@ public enum SortingRulesEnum {
 
     private final Integer value;
 
-    public Integer getValue() {
-        return value;
-    }
-
     SortingRulesEnum(Integer value) {
         this.value = value;
+    }
+
+    public Integer getValue() {
+        return value;
     }
 }

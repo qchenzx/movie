@@ -1,11 +1,11 @@
 package com.chenzx.movie.entity.ticketing;
 
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author ChenZexuan
@@ -15,6 +15,7 @@ import lombok.Data;
 @Data
 @TableName("movie_seat")
 public class MovieSeatDo implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 选座具体信息主键
      */
@@ -44,6 +45,4 @@ public class MovieSeatDo implements Serializable {
      * 订单主键
      */
     private String orderId;
-
-    private static final long serialVersionUID = 1L;
 }

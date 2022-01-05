@@ -4,7 +4,6 @@ import com.chenzx.movie.entity.sys.GlobalResults;
 import com.chenzx.movie.utils.GlobalResultsStatusCodeEnum;
 import com.chenzx.movie.utils.GlobalResultsUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * @date 2022/1/4 8:25
  */
 @Data
-@ApiModel(value = "com.chenzx.movie.entity.movie.MovieInfoParam",description = "要查询的电影信息字段")
+@ApiModel(value = "com.chenzx.movie.entity.movie.MovieInfoParam", description = "要查询的电影信息字段")
 public class MovieInfoParam {
 
     /**

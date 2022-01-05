@@ -2,10 +2,7 @@ package com.chenzx.movie.service.ticketing;
 
 import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.entity.ticketing.MovieHallInfo;
-import com.chenzx.movie.entity.ticketing.MovieSeatLocation;
 import com.chenzx.movie.entity.ticketing.MovieSeatParam;
-
-import java.util.List;
 
 /**
  * @author ChenZexuan
@@ -24,8 +21,9 @@ public interface ITicketingService {
 
     /**
      * 选定座位
+     *
      * @param seatParams 座位信息
-     * @param user 用户对象
+     * @param user       用户对象
      */
     void submitSeat(MovieSeatParam seatParams, IUser user);
 }

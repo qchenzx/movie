@@ -15,11 +15,11 @@ public enum TicketingSeatEnum {
      */
     NORMAL_SEAT(2);
 
+    private final Integer type;
+
     TicketingSeatEnum(Integer type) {
         this.type = type;
     }
-
-    private final Integer type;
 
     public Integer getType() {
         return type;

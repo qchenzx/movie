@@ -1,7 +1,6 @@
 package com.chenzx.movie.utils.redis.impl;
 
 import com.chenzx.movie.utils.redis.IRedisService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 

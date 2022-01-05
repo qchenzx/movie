@@ -22,11 +22,11 @@ public enum MovieOrderStatusEnum {
 
     private final Integer value;
 
-    public Integer getValue() {
-        return value;
-    }
-
     MovieOrderStatusEnum(Integer value) {
         this.value = value;
+    }
+
+    public Integer getValue() {
+        return value;
     }
 }

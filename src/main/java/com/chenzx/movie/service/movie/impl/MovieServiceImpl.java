@@ -49,10 +49,9 @@ public class MovieServiceImpl implements IMovieService {
     public IPage<MovieInfoDo> fuzzyQueryMovieInfo(MovieInfoParam param, Page<MovieInfoDo> page) {
         QueryWrapper<MovieInfoDo> movieInfoQueryWrapper = new QueryWrapper<>();
         List<Long> movieInfo = getMoviePrimaryKeyUnderCategory(param.getType());
-        if(movieInfo != null){
+        if (movieInfo != null) {
             movieInfoQueryWrapper.inSql("id", Joiner.on(",").join(movieInfo));
         }
-
         movieInfoQueryWrapper.like("name", param.getMovieName());
         if (SortingRulesEnum.TIME.getValue().equals(param.getOrderBy())) {
             movieInfoQueryWrapper.orderByDesc("date");

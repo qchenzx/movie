@@ -1,10 +1,10 @@
 package com.chenzx.movie.entity.movie;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author ChenZexuan
@@ -15,15 +15,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieType implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 电影类型主键
      */
     private String id;
-
     /**
      * 电影分类名字
      */
     private String name;
-
-    private static final long serialVersionUID = 1L;
 }

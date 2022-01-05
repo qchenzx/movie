@@ -1,7 +1,6 @@
 package com.chenzx.movie.entity.payment;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 

@@ -5,8 +5,6 @@ import com.chenzx.movie.entity.sys.LonLatParam;
 import com.chenzx.movie.entity.sys.SysRegionArea;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
 /**
  * @author ChenZexuan
  * @version 1.0

@@ -44,7 +44,7 @@ public class SysUserController {
 
     @PostMapping(value = "/changePassword")
     public String changePassword(@Valid @RequestBody ChangePassordParam param, @AuthenticationPrincipal IUser iUser) {
-        sysUserService.changePassword(param,iUser);
+        sysUserService.changePassword(param, iUser);
         // TODO 需要添加删除cookie的逻辑
         return "修改密码成功!";
     }

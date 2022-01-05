@@ -10,7 +10,7 @@ import com.chenzx.movie.entity.sys.GlobalResults;
  */
 public class GlobalResultsUtil {
 
-    public static  GlobalResults isOk(Object t) {
+    public static GlobalResults isOk(Object t) {
         GlobalResults results = new GlobalResults();
         results.setCode(GlobalResultsStatusCodeEnum.SUCCESS.getValue());
         results.setDesc("成功");

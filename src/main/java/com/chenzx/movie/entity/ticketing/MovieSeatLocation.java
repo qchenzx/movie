@@ -3,7 +3,6 @@ package com.chenzx.movie.entity.ticketing;
 import lombok.Data;
 
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
 
 /**
  * @author ChenZexuan
