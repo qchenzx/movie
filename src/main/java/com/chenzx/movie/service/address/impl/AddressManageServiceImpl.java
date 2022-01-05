@@ -11,6 +11,7 @@ import com.chenzx.movie.mapper.address.AddressMapper;
 import com.chenzx.movie.service.address.IAddressManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -78,5 +79,27 @@ public class AddressManageServiceImpl implements IAddressManageService {
             throw new BusException("未找到要删除的收获地址,请联系管理员");
         }
         addressMapper.deleteById(addressId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void setDefaultHarvestAddress(String addressId, IUser user) {
+        AddressDo newAddress = addressMapper.selectOne(
+                new LambdaQueryWrapper<AddressDo>()
+                        .eq(AddressDo::getId, addressId)
+                        .eq(AddressDo::getUserId, user.getId()));
+        if (newAddress.getIsDefaultAddress()) {
+            throw new BusException("已经是默认收货地址了!");
+        }
+        AddressDo oldAddress = addressMapper.selectOne(
+                new LambdaQueryWrapper<AddressDo>()
+                        .eq(AddressDo::getIsDefaultAddress, true)
+                        .eq(AddressDo::getUserId, user.getId()));
+        newAddress.setIsDefaultAddress(true);
+        addressMapper.updateById(newAddress);
+        if (oldAddress != null) {
+            oldAddress.setIsDefaultAddress(false);
+            addressMapper.updateById(oldAddress);
+        }
     }
 }

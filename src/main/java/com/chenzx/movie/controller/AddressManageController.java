@@ -67,4 +67,14 @@ public class AddressManageController {
         return "删除成功!";
     }
 
+    @ApiOperation(value = "设置默认地址接口", notes = "必须存在一个默认地址,所以没有取消默认地址接口,如果重复设置默认地址会提示")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "addressId", value = "要设置默认收货地址的主键", paramType = "query", dataType = "String")
+    })
+    @PostMapping("harvestAddress")
+    public String setDefaultHarvestAddress(@RequestParam String addressId, @ApiIgnore @AuthenticationPrincipal IUser iUser) {
+        addressManageService.setDefaultHarvestAddress(addressId, iUser);
+        return "设置默认收货地址成功!";
+    }
+
 }

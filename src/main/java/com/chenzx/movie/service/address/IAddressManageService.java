@@ -44,4 +44,12 @@ public interface IAddressManageService {
      */
     void deleteAddress(String addressId, IUser user);
 
+    /**
+     * 设置默认收货地址
+     *
+     * @param addressId 要设置默认收货地址的主键
+     * @param user      用户对象
+     */
+    void setDefaultHarvestAddress(String addressId, IUser user);
+
 }
