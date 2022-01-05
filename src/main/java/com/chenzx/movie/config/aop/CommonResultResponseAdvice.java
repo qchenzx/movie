@@ -26,7 +26,6 @@ public class CommonResultResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        String name = returnType.getClass().getPackage().getName();
         String className = returnType.getExecutable().getDeclaringClass().getName();
         String methodName = returnType.getExecutable().getName();
         if ("com.chenzx.movie.controller.MovieController".equals(className) && "getMovieCoverImg".equals(methodName)) {

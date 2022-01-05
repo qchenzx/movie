@@ -2,6 +2,7 @@ package com.chenzx.movie.controller;
 
 import com.chenzx.movie.entity.address.AddAddressParam;
 import com.chenzx.movie.entity.address.AddressVo;
+import com.chenzx.movie.entity.address.EditAddressParam;
 import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.service.address.IAddressManageService;
 import io.swagger.annotations.Api;
@@ -44,6 +45,16 @@ public class AddressManageController {
     @GetMapping(value = "/get")
     public AddressVo getAddress(@ApiIgnore @AuthenticationPrincipal IUser iUser) {
         return addressManageService.getAddress(iUser);
+    }
+
+    @ApiOperation(value = "修改地址接口", notes = "修改指定的收货地址")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "param", value = "修改后的收货地址数据", paramType = "body", dataType = "EditAddressParam")
+    })
+    @PutMapping(value = "/edit")
+    public String editAddress(@RequestBody @Valid EditAddressParam param, @ApiIgnore @AuthenticationPrincipal IUser iUser) {
+        addressManageService.editAddress(param, iUser);
+        return "修改成功!";
     }
 
 }

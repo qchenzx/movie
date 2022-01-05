@@ -4,6 +4,7 @@ import com.chenzx.movie.entity.sys.GlobalResults;
 import com.chenzx.movie.utils.GlobalResultsStatusCodeEnum;
 import com.chenzx.movie.utils.GlobalResultsUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -26,7 +27,7 @@ public class RestExceptionHandler {
     @ResponseBody
     @ExceptionHandler({BusException.class})
     public GlobalResults exception(Exception e) {
-        log.error("全局异常信息 异常类型 = {},Exception = {}", e.getClass().getName(), e.getMessage());
+        log.error("业务异常信息 异常类型 = {},Exception = {}", e.getClass().getName(), e.getMessage());
         return GlobalResultsUtil.error(GlobalResultsStatusCodeEnum.FAIL.getValue(), "接口调用失败", e.getMessage());
     }
 
@@ -48,5 +49,11 @@ public class RestExceptionHandler {
                 GlobalResultsStatusCodeEnum.REQUEST_PARAMETER_ERROR.getValue(),
                 "请求参数错误",
                 e.getMessage());
+    }
+
+    @ExceptionHandler({Exception.class})
+    public GlobalResults allException(Exception e) {
+        log.error("全局未知异常信息 异常类型 = {},Exception = {}", e.getClass().getName(), e.getMessage());
+        return GlobalResultsUtil.error(GlobalResultsStatusCodeEnum.FAIL.getValue(), "接口调用失败", e.getMessage());
     }
 }

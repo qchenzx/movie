@@ -2,6 +2,7 @@ package com.chenzx.movie.service.address;
 
 import com.chenzx.movie.entity.address.AddAddressParam;
 import com.chenzx.movie.entity.address.AddressVo;
+import com.chenzx.movie.entity.address.EditAddressParam;
 import com.chenzx.movie.entity.sys.IUser;
 
 /**
@@ -26,5 +27,13 @@ public interface IAddressManageService {
      * @return 给用户展示的地址对象
      */
     AddressVo getAddress(IUser user);
+
+    /**
+     * 修改收货地址接口
+     *
+     * @param param 修改后的收货地址
+     * @param user  用户对象
+     */
+    void editAddress(EditAddressParam param, IUser user);
 
 }

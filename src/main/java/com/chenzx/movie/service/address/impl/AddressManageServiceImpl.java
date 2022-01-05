@@ -5,6 +5,7 @@ import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.address.AddAddressParam;
 import com.chenzx.movie.entity.address.AddressDo;
 import com.chenzx.movie.entity.address.AddressVo;
+import com.chenzx.movie.entity.address.EditAddressParam;
 import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.mapper.address.AddressMapper;
 import com.chenzx.movie.service.address.IAddressManageService;
@@ -49,5 +50,22 @@ public class AddressManageServiceImpl implements IAddressManageService {
         result.setAddress(address);
         result.setDefaultAddressId(defaultAddressId);
         return result;
+    }
+
+    @Override
+    public void editAddress(EditAddressParam param, IUser user) {
+        String addressId = param.getId();
+        Long userId = user.getId();
+        AddressDo address = addressMapper.selectOne(new LambdaQueryWrapper<AddressDo>()
+                .eq(AddressDo::getId, addressId)
+                .eq(AddressDo::getUserId, userId));
+        if (address == null) {
+            throw new BusException("未查找到要修改的收获地址信息,可能是传入的收获地址主键有误!");
+        }
+        address.setName(param.getName());
+        address.setMobileNumber(param.getMobileNumber());
+        address.setDetailedAddress(param.getDetailedAddress());
+        address.setZipCode(param.getZipCode());
+        addressMapper.updateById(address);
     }
 }
