@@ -1,6 +1,7 @@
 package com.chenzx.movie.controller;
 
 import com.chenzx.movie.config.exception.BusException;
+import com.chenzx.movie.entity.address.MovieFavoriteParam;
 import com.chenzx.movie.entity.collection.CollectionMovie;
 import com.chenzx.movie.entity.collection.CollectionMovieParam;
 import com.chenzx.movie.entity.sys.IUser;
@@ -48,6 +49,15 @@ public class CollectionManageController {
     @PostMapping("click")
     public String collectionMovie(@RequestBody @Valid CollectionMovieParam param, @ApiIgnore @AuthenticationPrincipal IUser user) {
         return collectionManageService.collectionMovie(param, user);
+    }
+
+    @ApiOperation(value = "查询指定电影是否被当前登录用户收藏", notes = "使用场景:当用户进入电影详情页面时,如果该用户收藏过该电影,那么则显示已收藏,反之。该接口则用来判断用户是否收藏过该电影")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "param", value = "要查询是否被收藏的电影信息", paramType = "body", dataType = "MovieFavoriteParam")
+    })
+    @PostMapping("isMovieFavorite")
+    public Boolean isMovieFavorite(@RequestBody @Valid MovieFavoriteParam param, @ApiIgnore @AuthenticationPrincipal IUser user) {
+        return collectionManageService.isMovieFavorite(param, user);
     }
 
 }

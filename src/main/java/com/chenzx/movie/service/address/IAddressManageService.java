@@ -3,6 +3,7 @@ package com.chenzx.movie.service.address;
 import com.chenzx.movie.entity.address.AddAddressParam;
 import com.chenzx.movie.entity.address.AddressVo;
 import com.chenzx.movie.entity.address.EditAddressParam;
+import com.chenzx.movie.entity.address.MovieFavoriteParam;
 import com.chenzx.movie.entity.sys.IUser;
 
 /**
@@ -51,5 +52,6 @@ public interface IAddressManageService {
      * @param user      用户对象
      */
     void setDefaultHarvestAddress(String addressId, IUser user);
+
 
 }

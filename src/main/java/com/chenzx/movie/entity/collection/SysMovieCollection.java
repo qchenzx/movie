@@ -1,5 +1,8 @@
 package com.chenzx.movie.entity.collection;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +17,12 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("sys_movie_collection")
 public class SysMovieCollection implements Serializable {
     /**
      * 主键
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

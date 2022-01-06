@@ -2,6 +2,7 @@ package com.chenzx.movie.service.collection.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chenzx.movie.config.exception.BusException;
+import com.chenzx.movie.entity.address.MovieFavoriteParam;
 import com.chenzx.movie.entity.collection.CollectionMovie;
 import com.chenzx.movie.entity.collection.CollectionMovieParam;
 import com.chenzx.movie.entity.collection.SysMovieCollection;
@@ -53,5 +54,14 @@ public class CollectionManageServiceImpl implements ICollectionManageService {
             collectionMovieMapper.deleteById(sysMovieCollection);
             return "取消收藏成功!";
         }
+    }
+
+    @Override
+    public Boolean isMovieFavorite(MovieFavoriteParam param, IUser user) {
+        SysMovieCollection sysMovieCollection = collectionMovieMapper.selectOne(
+                new LambdaQueryWrapper<SysMovieCollection>()
+                        .eq(SysMovieCollection::getMovieId, param.getMovieId())
+                        .eq(SysMovieCollection::getUserId, user.getId()));
+        return sysMovieCollection != null;
     }
 }

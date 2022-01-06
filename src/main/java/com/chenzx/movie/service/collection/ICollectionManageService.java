@@ -1,5 +1,6 @@
 package com.chenzx.movie.service.collection;
 
+import com.chenzx.movie.entity.address.MovieFavoriteParam;
 import com.chenzx.movie.entity.collection.CollectionMovie;
 import com.chenzx.movie.entity.collection.CollectionMovieParam;
 import com.chenzx.movie.entity.sys.IUser;
@@ -29,4 +30,13 @@ public interface ICollectionManageService {
      * @return 反馈给用户的提示
      */
     String collectionMovie(CollectionMovieParam param, IUser user);
+
+    /**
+     * 判断该电影是否被该用户收藏
+     *
+     * @param param 电影信息
+     * @param user  用户对象
+     * @return 如果被收藏返回true, 反之
+     */
+    Boolean isMovieFavorite(MovieFavoriteParam param, IUser user);
 }
