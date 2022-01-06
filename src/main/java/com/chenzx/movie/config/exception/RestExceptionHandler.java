@@ -51,9 +51,9 @@ public class RestExceptionHandler {
                 e.getMessage());
     }
 
-    @ExceptionHandler({Exception.class})
-    public GlobalResults allException(Exception e) {
-        log.error("全局未知异常信息 异常类型 = {},Exception = {}", e.getClass().getName(), e.getMessage());
-        return GlobalResultsUtil.error(GlobalResultsStatusCodeEnum.FAIL.getValue(), "接口调用失败", e.getMessage());
-    }
+//    @ExceptionHandler({Exception.class})
+//    public GlobalResults allException(Exception e) {
+//        log.error("全局未知异常信息 异常类型 = {},Exception = {}", e.getClass().getName(), e.getMessage());
+//        return GlobalResultsUtil.error(GlobalResultsStatusCodeEnum.FAIL.getValue(), "接口调用失败", e.getMessage());
+//    }
 }
