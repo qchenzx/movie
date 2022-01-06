@@ -7,13 +7,14 @@
         <result column="cast" property="cast"/>
         <result column="date" property="releaseDate"/>
         <result column="ratio" property="score"/>
+        <result column="id" property="movieId"/>
         <collection property="type" ofType="java.lang.String">
             <result column="type"/>
         </collection>
     </resultMap>
 
     <select id="selectUserCollectionMovieInfo" resultMap="CollectionMovieInfoMap">
-        select i.name, i.cast, i.date, i.ratio, type.name as type
+        select i.name, i.cast, i.date, i.ratio, type.name as type, i.id
         from sys_movie_collection as c
                  left join movie_info as i on c.movie_id = i.id
                  left join sys_user as u on c.user_id = u.id
@@ -21,6 +22,5 @@
                  left join movie_type as type on t.type_id = type.id
         where u.id = #{id}
     </select>
-
 
 </mapper>

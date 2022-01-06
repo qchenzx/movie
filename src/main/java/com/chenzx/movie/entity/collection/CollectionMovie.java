@@ -48,4 +48,7 @@ public class CollectionMovie {
     @ApiModelProperty(value = "电影评分", example = "9.0")
     private String score;
 
+    @ApiModelProperty(value = "电影主键", notes = "用于取消收藏")
+    private Long movieId;
+
 }

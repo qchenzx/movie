@@ -11,8 +11,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  * @author ChenZexuan
@@ -47,5 +49,15 @@ public class SysUserController {
         sysUserService.changePassword(param, iUser);
         // TODO 需要添加删除cookie的逻辑
         return "修改密码成功!";
+    }
+
+    @PostMapping(value = "/uploadAvatar")
+    public String uploadAvatar(@RequestParam MultipartFile file, @AuthenticationPrincipal IUser user) {
+        try {
+            return sysUserService.uploadAvatar(file, user);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BusException("上传头像失败,请刷新页面后重新尝试");
+        }
     }
 }

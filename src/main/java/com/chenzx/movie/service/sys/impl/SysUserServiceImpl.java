@@ -1,10 +1,12 @@
 package com.chenzx.movie.service.sys.impl;
 
+import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.sys.*;
 import com.chenzx.movie.mapper.sys.IUserMapper;
 import com.chenzx.movie.mapper.sys.SysRoleMapper;
+import com.chenzx.movie.mapper.sys.SysUserAvatarMapper;
 import com.chenzx.movie.mapper.sys.SysUserMapper;
 import com.chenzx.movie.service.sys.ISysUserService;
 import com.google.common.collect.Lists;
@@ -15,7 +17,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -36,8 +41,12 @@ public class SysUserServiceImpl implements ISysUserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private SysRoleMapper sysRoleMapper;
+    @Autowired
+    private SysUserAvatarMapper userAvatarMapper;
     @Value("${security.default-role-after-registration}")
     private String defaultRoleAfterRegistration;
+    @Value("${local-file.avatar-path}")
+    private String uploadAvatarPath;
 
     @Override
     public List<PathRoleMapping> queryPathRequiredRole() {
@@ -95,5 +104,24 @@ public class SysUserServiceImpl implements ISysUserService {
         }
         user.setPassword(passwordEncoder.encode(param.getNewPassword()));
         iUserMapper.updateById(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String uploadAvatar(MultipartFile file, IUser user) throws IOException {
+        if (file.isEmpty() || file.getBytes().length == 0) {
+            throw new BusException("上传头像为空!");
+        }
+        FileUtil.mkdir(uploadAvatarPath);
+
+        IUserDo userDo = iUserMapper.selectById(user.getId());
+        SysUserAvatar sysUserAvatar = new SysUserAvatar(null, userDo.getId(), new Date());
+        userAvatarMapper.insert(sysUserAvatar);
+        userDo.setAvatar(sysUserAvatar.getId());
+        iUserMapper.updateById(userDo);
+
+        File saveFile = new File(uploadAvatarPath, sysUserAvatar.getId());
+        file.transferTo(saveFile);
+        return "上传成功!";
     }
 }

@@ -1,7 +1,9 @@
 package com.chenzx.movie.service.sys;
 
 import com.chenzx.movie.entity.sys.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,4 +43,14 @@ public interface ISysUserService {
      * @param iUser 用户对象
      */
     void changePassword(ChangePassordParam param, IUser iUser);
+
+    /**
+     * 上传头像
+     *
+     * @param file 头像文件
+     * @param user 用户对象
+     * @return 头像上传后的提示
+     * @throws IOException 异常
+     */
+    String uploadAvatar(MultipartFile file, IUser user) throws IOException;
 }
