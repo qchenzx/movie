@@ -60,7 +60,9 @@ public class MovieServiceImpl implements IMovieService {
         } else {
             throw new BusException("排序字段错误");
         }
-        return infoMapper.selectPage(page, movieInfoQueryWrapper);
+        Page<MovieInfoDo> movieInfoDoPage = infoMapper.selectPage(page, movieInfoQueryWrapper);
+        populateClassificationFields(movieInfoDoPage.getRecords());
+        return movieInfoDoPage;
     }
 
     @Override
@@ -77,7 +79,25 @@ public class MovieServiceImpl implements IMovieService {
         } else {
             throw new BusException("排序字段错误");
         }
-        return infoMapper.selectPage(page, movieInfoQueryWrapper);
+        Page<MovieInfoDo> movieInfoDoPage = infoMapper.selectPage(page, movieInfoQueryWrapper);
+        populateClassificationFields(movieInfoDoPage.getRecords());
+        return movieInfoDoPage;
+    }
+
+    /**
+     * 通过电影信息查询电影类型并填充进即将返回的分页对象中的数据中
+     *
+     * @param movieInfo 电影信息
+     */
+    public void populateClassificationFields(List<MovieInfoDo> movieInfo) {
+        for (MovieInfoDo movie : movieInfo) {
+            List<MovieInfoType> movieInfoTypes = infoTypeMapper.selectList(
+                    new LambdaQueryWrapper<MovieInfoType>().eq(MovieInfoType::getInfoId, movie.getId()));
+            String condition = movieInfoTypes.stream().map(MovieInfoType::getTypeId).collect(Collectors.joining("\",\""));
+            List<MovieType> movieTypes = typeMapper.selectList(new QueryWrapper<MovieType>()
+                    .inSql("id", "\"" + condition + "\""));
+            movie.setType(movieTypes.stream().map(MovieType::getName).collect(Collectors.joining(",")));
+        }
     }
 
     /**
