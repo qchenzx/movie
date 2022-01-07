@@ -15,8 +15,8 @@ public interface IPaymentService {
      * 提交支付请求
      *
      * @param orderMsg 订单信息
-     * @param response 返回头
+     * @return 支付宝的支付form表单
      */
-    void submit(OrderMsg orderMsg, HttpServletResponse response);
+    String submit(OrderMsg orderMsg);
 
 }

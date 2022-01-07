@@ -47,19 +47,13 @@ public class TicketingServiceImpl implements ITicketingService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void submitSeat(MovieSeatParam param, IUser user) {
+    public MovieOrder submitSeat(MovieSeatParam param, IUser user) {
         MovieHallDo movieHallDo = movieHallMapper.selectById(param.getHallId());
         if (movieHallDo == null) {
             throw new BusException("没有查询到放映场次信息,请刷新后重新尝试");
         }
         IUserDo iUser = userMapper.selectById(user.getId());
         Long total = movieHallDo.getPrice() * param.getSeats().size();
-        if (iUser.getIntegral() < total) {
-            throw new BusException("余额不足!");
-        }
-        iUser.setIntegral(iUser.getIntegral() - total);
-        userMapper.updateById(iUser);
-
 
         MovieOrder movieOrder = new MovieOrder();
         movieOrder.setUserId(iUser.getId());
@@ -80,6 +74,7 @@ public class TicketingServiceImpl implements ITicketingService {
             movieSeat.setOrderId(movieOrder.getId());
             movieSeatMapper.insert(movieSeat);
         }
+        return movieOrder;
     }
 
     /**

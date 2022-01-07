@@ -31,7 +31,7 @@ public class PaymentServiceImpl implements IPaymentService {
 
     @SneakyThrows
     @Override
-    public void submit(OrderMsg orderMsg, HttpServletResponse response) {
+    public String submit(OrderMsg orderMsg) {
         MovieOrder movieOrder = orderMapper.selectOne(new LambdaQueryWrapper<MovieOrder>()
                 .eq(MovieOrder::getStatus, MovieOrderStatusEnum.SUBMITTED.getValue())
                 .eq(MovieOrder::getId, orderMsg.getOrderId()));
@@ -48,10 +48,7 @@ public class PaymentServiceImpl implements IPaymentService {
         request.setNotifyUrl("");
         request.setReturnUrl("");
         request.setBizContent(bizContent.toString());
-        String form = alipayClient.pageExecute(request).getBody();
-        response.setContentType("text/html;charset=utf-8");
-        response.getWriter().write(form);
-        response.getWriter().flush();
-        response.getWriter().close();
+
+        return alipayClient.pageExecute(request).getBody();
     }
 }

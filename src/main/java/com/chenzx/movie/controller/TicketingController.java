@@ -3,6 +3,7 @@ package com.chenzx.movie.controller;
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.entity.ticketing.MovieHallInfo;
+import com.chenzx.movie.entity.ticketing.MovieOrder;
 import com.chenzx.movie.entity.ticketing.MovieSeatParam;
 import com.chenzx.movie.service.ticketing.ITicketingService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +35,9 @@ public class TicketingController {
     }
 
     @PostMapping
-    public String submitSeat(@Valid @RequestBody MovieSeatParam seatParams
+    public MovieOrder submitSeat(@Valid @RequestBody MovieSeatParam seatParams
             , @AuthenticationPrincipal IUser user) {
-        ticketingService.submitSeat(seatParams, user);
-        return "购买成功!";
+        return ticketingService.submitSeat(seatParams, user);
     }
 
 }
