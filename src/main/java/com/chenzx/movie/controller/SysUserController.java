@@ -60,4 +60,14 @@ public class SysUserController {
             throw new BusException("上传头像失败,请刷新页面后重新尝试");
         }
     }
+
+    @GetMapping(value = "/getAvatar")
+    public byte[] getUserAvatar(@AuthenticationPrincipal IUser user) {
+        try {
+            return sysUserService.getUserAvatar(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BusException("文件读取错误!");
+        }
+    }
 }

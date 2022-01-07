@@ -1,8 +1,10 @@
 package com.chenzx.movie.service.sys.impl;
 
 import cn.hutool.core.io.FileUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chenzx.movie.config.exception.BusException;
+import com.chenzx.movie.entity.movie.MovieCoverDo;
 import com.chenzx.movie.entity.sys.*;
 import com.chenzx.movie.mapper.sys.IUserMapper;
 import com.chenzx.movie.mapper.sys.SysRoleMapper;
@@ -19,8 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 
@@ -123,5 +124,27 @@ public class SysUserServiceImpl implements ISysUserService {
         File saveFile = new File(uploadAvatarPath, sysUserAvatar.getId());
         file.transferTo(saveFile);
         return "上传成功!";
+    }
+
+    @Override
+    public byte[] getUserAvatar(IUser user) throws IOException {
+        IUserDo userDo = iUserMapper.selectById(user.getId());
+        SysUserAvatar sysUserAvatar = userAvatarMapper.selectOne(
+                new LambdaQueryWrapper<SysUserAvatar>()
+                        .eq(SysUserAvatar::getId, userDo.getAvatar()));
+        File filePath = new File(uploadAvatarPath);
+        if (!filePath.exists()) {
+            log.error("在磁盘中未找到:{} 目录", uploadAvatarPath);
+            throw new BusException("无法定位到文件目录!");
+        }
+        File file = new File(uploadAvatarPath, sysUserAvatar.getId());
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        byte[] temp = new byte[10240000];
+        int len = 0;
+        while ((len = fis.read(temp)) != -1) {
+            byteArrayOutputStream.write(temp, 0, len);
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 }

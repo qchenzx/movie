@@ -31,6 +31,9 @@ public class CommonResultResponseAdvice implements ResponseBodyAdvice<Object> {
         if ("com.chenzx.movie.controller.MovieController".equals(className) && "getMovieCoverImg".equals(methodName)) {
             return false;
         }
+        if ("com.chenzx.movie.controller.SysUserController".equals(className) && "getUserAvatar".equals(methodName)) {
+            return false;
+        }
         return !returnType.getGenericParameterType().equals(GlobalResults.class) &&
                 !returnType.getDeclaringClass().getName().contains("springfox");
     }

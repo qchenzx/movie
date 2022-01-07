@@ -3,6 +3,7 @@ package com.chenzx.movie.service.sys;
 import com.chenzx.movie.entity.sys.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -53,4 +54,12 @@ public interface ISysUserService {
      * @throws IOException 异常
      */
     String uploadAvatar(MultipartFile file, IUser user) throws IOException;
+
+    /**
+     * 获取用户头像接口
+     *
+     * @param user 用户对象
+     * @return 头像二进制流
+     */
+    byte[] getUserAvatar(IUser user) throws IOException;
 }
