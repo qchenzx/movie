@@ -45,7 +45,7 @@ public class PaymentServiceImpl implements IPaymentService {
         bizContent.put("product_code", "FAST_INSTANT_TRADE_PAY");
 
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-        request.setNotifyUrl("");
+        request.setNotifyUrl("http://5909-223-68-170-209.ngrok.io/api/alipayCallback");
         request.setReturnUrl("");
         request.setBizContent(bizContent.toString());
 
