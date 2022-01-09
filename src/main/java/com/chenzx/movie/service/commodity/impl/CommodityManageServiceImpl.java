@@ -1,13 +1,17 @@
 package com.chenzx.movie.service.commodity.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.commodity.CommodityDescribe;
 import com.chenzx.movie.entity.commodity.CommodityDescribeParam;
 import com.chenzx.movie.entity.commodity.CommodityInfo;
+import com.chenzx.movie.entity.commodity.MallType;
 import com.chenzx.movie.mapper.commodity.CommodityManageMapper;
+import com.chenzx.movie.mapper.commodity.MallTypeMapper;
 import com.chenzx.movie.service.commodity.ICommodityManageService;
+import com.chenzx.movie.service.commodity.constant.QueryRankValueEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * @author ChenZexuan
@@ -30,6 +35,8 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
 
     @Autowired
     private CommodityManageMapper commodityManageMapper;
+    @Autowired
+    private MallTypeMapper mallTypeMapper;
     @Value("${local-file.mall-path}")
     private String mallImagePath;
 
@@ -50,6 +57,20 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
             }
         }
         return commodityDesc;
+    }
+
+    @Override
+    public List<MallType> getCommodityClassification(Integer rank, Long typeId) {
+        LambdaQueryWrapper<MallType> wrapper = new LambdaQueryWrapper<>();
+        if (QueryRankValueEnum.PARENT.getValue().equals(rank)) {
+            wrapper.isNull(MallType::getParentId);
+        } else if (QueryRankValueEnum.CHILDREN.getValue().equals(rank)) {
+            if (typeId == null) {
+                throw new BusException("不能传入空的typeId");
+            }
+            wrapper.eq(MallType::getParentId, typeId);
+        }
+        return mallTypeMapper.selectList(wrapper);
     }
 
     /**
