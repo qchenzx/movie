@@ -48,7 +48,8 @@
         order by unit_price
         limit 1) as unit_price
         from mall_info as i
-        left join mall_image as image on image.info_id = image.id and image.is_main_graph = true
+        left join mall_image as image
+        on image.info_id = i.id and image.is_main_graph = true
         left join mall_info_type as it on i.id = it.info_id
         left join mall_type as t on t.id = it.type_id
         <where>
