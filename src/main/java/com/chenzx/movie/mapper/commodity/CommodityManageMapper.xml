@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chenzx.movie.mapper.commodity.CommodityManageMapper">
+
+    <select id="getCommodityInfo" resultMap="getCommodityInfoMap">
+        select i.id,
+               i.name,
+               c.author,
+               c.content,
+               c.time,
+               s.name    as specifications_name,
+               s.id      as specifications_id,
+               s.unit_price,
+               (select unit_price
+                from mall_specifications
+                where info_id = #{infoId}
+                order by unit_price
+                limit 1) as minimumUnit_price
+        from mall_info as i
+                 left join mall_comments as c on i.id = c.info_id
+                 left join mall_specifications as s on i.id = s.info_id
+        where i.id = #{infoId}
+    </select>
+
+    <resultMap id="getCommodityInfoMap" type="com.chenzx.movie.entity.commodity.CommodityInfo">
+        <id column="id" property="mallId"/>
+        <result column="name" property="name"/>
+        <result column="minimumUnit_price" property="minimumUnitPrice"/>
+        <collection property="comments" ofType="com.chenzx.movie.entity.commodity.CommodityComment">
+            <result column="author" property="author"/>
+            <result column="content" property="content"/>
+            <result column="time" property="time"/>
+        </collection>
+        <collection property="specifications" ofType="com.chenzx.movie.entity.commodity.CommoditySpecifications">
+            <id column="specifications_id" property="specificationsId"/>
+            <result column="specifications_name" property="name"/>
+            <result column="unit_price" property="unitPrice"/>
+        </collection>
+    </resultMap>
+
+</mapper>
