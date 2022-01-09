@@ -32,6 +32,7 @@ security:
 local-file:
   img-path: D:\movie_file
   avatar-path: D:\movie_file\avatar
+  mall-path: D:\movie_file\mall
 mybatis-plus:
   global-config:
     db-config:

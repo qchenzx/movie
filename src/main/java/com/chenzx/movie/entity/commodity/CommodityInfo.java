@@ -31,7 +31,7 @@ public class CommodityInfo {
      * 商品最低单价
      */
     @ApiModelProperty(value = "商品最低单价")
-    private Double minimumUnitPrice = null;
+    private Double minimumUnitPrice;
 
     /**
      * 商品规格
@@ -49,6 +49,6 @@ public class CommodityInfo {
      * 商品优惠卷
      */
     @ApiModelProperty(value = "商品可以领取的优惠卷")
-    private List<CommodityCoupon> coupons = null;
+    private List<CommodityCoupon> coupons;
 
 }

@@ -15,7 +15,7 @@
                 from mall_specifications
                 where info_id = #{infoId}
                 order by unit_price
-                limit 1) as minimumUnit_price
+                limit 1) as minimum_unit_price
         from mall_info as i
                  left join mall_comments as c on i.id = c.info_id
                  left join mall_specifications as s on i.id = s.info_id
@@ -25,7 +25,7 @@
     <resultMap id="getCommodityInfoMap" type="com.chenzx.movie.entity.commodity.CommodityInfo">
         <id column="id" property="mallId"/>
         <result column="name" property="name"/>
-        <result column="minimumUnit_price" property="minimumUnitPrice"/>
+        <result column="minimum_unit_price" property="minimumUnitPrice"/>
         <collection property="comments" ofType="com.chenzx.movie.entity.commodity.CommodityComment">
             <result column="author" property="author"/>
             <result column="content" property="content"/>
@@ -37,5 +37,29 @@
             <result column="unit_price" property="unitPrice"/>
         </collection>
     </resultMap>
+
+    <select id="getCommodityDesc" resultType="com.chenzx.movie.entity.commodity.CommodityDescribe">
+        select i.id,
+        i.name,
+        image.id as base64Image,
+        (select unit_price
+        from mall_specifications
+        where info_id = i.id
+        order by unit_price
+        limit 1) as unit_price
+        from mall_info as i
+        left join mall_image as image on image.info_id = image.id and image.is_main_graph = true
+        left join mall_info_type as it on i.id = it.info_id
+        left join mall_type as t on t.id = it.type_id
+        <where>
+            <if test="param.type != null">
+                t.id = #{param.type}
+            </if>
+            <if test="param.name != null">
+                and i.name like concat('%', #{param.name}, '%')
+            </if>
+        </where>
+    </select>
+
 
 </mapper>

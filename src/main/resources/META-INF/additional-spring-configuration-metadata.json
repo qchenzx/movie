@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "security.default-role-after-registration",
+      "type": "java.lang.String",
+      "description": "Description for security.default-role-after-registration."
+    }
+  ]
+}

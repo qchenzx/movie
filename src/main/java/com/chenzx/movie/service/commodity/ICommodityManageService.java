@@ -1,5 +1,9 @@
 package com.chenzx.movie.service.commodity;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.chenzx.movie.entity.commodity.CommodityDescribe;
+import com.chenzx.movie.entity.commodity.CommodityDescribeParam;
 import com.chenzx.movie.entity.commodity.CommodityInfo;
 
 /**
@@ -17,5 +21,14 @@ public interface ICommodityManageService {
      * @return 商品详细信息
      */
     CommodityInfo getCommodityInfo(Long infoId);
+
+    /**
+     * 查询商品描述信息
+     *
+     * @param page  分页对象
+     * @param param 查询参数
+     * @return 描述信息
+     */
+    IPage<CommodityDescribe> getCommodityDesc(Page<CommodityDescribe> page, CommodityDescribeParam param);
 
 }

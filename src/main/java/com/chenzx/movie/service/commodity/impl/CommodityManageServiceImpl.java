@@ -1,5 +1,9 @@
 package com.chenzx.movie.service.commodity.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.chenzx.movie.entity.commodity.CommodityDescribe;
+import com.chenzx.movie.entity.commodity.CommodityDescribeParam;
 import com.chenzx.movie.entity.commodity.CommodityInfo;
 import com.chenzx.movie.mapper.commodity.CommodityManageMapper;
 import com.chenzx.movie.service.commodity.ICommodityManageService;
@@ -22,5 +26,10 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
     @Override
     public CommodityInfo getCommodityInfo(Long infoId) {
         return commodityManageMapper.getCommodityInfo(infoId);
+    }
+
+    @Override
+    public IPage<CommodityDescribe> getCommodityDesc(Page<CommodityDescribe> page, CommodityDescribeParam param) {
+        return commodityManageMapper.getCommodityDesc(page, param);
     }
 }
