@@ -27,8 +27,8 @@ public class PaymentServiceImpl implements IPaymentService {
     private MovieOrderMapper orderMapper;
     @Autowired
     private AlipayClient alipayClient;
-    @Value("payment-callback")
-    private String paymentCallback;
+    @Value("${server.public-path}")
+    private String paymentCallbackPublicPath;
 
     @SneakyThrows
     @Override
@@ -46,7 +46,7 @@ public class PaymentServiceImpl implements IPaymentService {
         bizContent.put("product_code", "FAST_INSTANT_TRADE_PAY");
 
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-        request.setNotifyUrl("http://5f09-223-68-170-209.ngrok.io/api/alipayCallback");
+        request.setNotifyUrl(paymentCallbackPublicPath);
         request.setReturnUrl("");
         request.setBizContent(bizContent.toString());
 

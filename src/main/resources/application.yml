@@ -25,6 +25,7 @@ spring:
     timeout: 1000ms
 server:
   port: 8080
+  public-path: http://08d0-223-68-170-209.ngrok.io/api/alipayCallback
 security:
   login-url: /sys/user/login
   logout-url: /sys/user/logout

@@ -1,9 +1,40 @@
 {
   "properties": [
     {
+      "name": "server.public-path",
+      "type": "java.lang.String",
+      "description": "外网能够访问到的服务器地址.",
+      "defaultValue": "http://08d0-223-68-170-209.ngrok.io/api/alipayCallback"
+    },
+    {
+      "name": "security.login-url",
+      "type": "java.lang.String",
+      "description": "Description for security.login-url."
+    },
+    {
+      "name": "security.logout-url",
+      "type": "java.lang.String",
+      "description": "Description for security.logout-url."
+    },
+    {
       "name": "security.default-role-after-registration",
       "type": "java.lang.String",
       "description": "Description for security.default-role-after-registration."
+    },
+    {
+      "name": "local-file.img-path",
+      "type": "java.lang.String",
+      "description": "Description for local-file.img-path."
+    },
+    {
+      "name": "local-file.avatar-path",
+      "type": "java.lang.String",
+      "description": "Description for local-file.avatar-path."
+    },
+    {
+      "name": "local-file.mall-path",
+      "type": "java.lang.String",
+      "description": "Description for local-file.mall-path."
     }
   ]
 }

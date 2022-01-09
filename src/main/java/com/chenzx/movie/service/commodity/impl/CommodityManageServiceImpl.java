@@ -30,6 +30,21 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
 
     @Override
     public IPage<CommodityDescribe> getCommodityDesc(Page<CommodityDescribe> page, CommodityDescribeParam param) {
-        return commodityManageMapper.getCommodityDesc(page, param);
+        IPage<CommodityDescribe> commodityDesc = commodityManageMapper.getCommodityDesc(page, param);
+        for (CommodityDescribe desc : commodityDesc.getRecords()) {
+            desc.setBase64Image(reloadImageById(desc.getBase64Image()));
+        }
+        return commodityDesc;
+    }
+
+    /**
+     * 通过图片主键查找图片,并将图片转换为base64编码返回
+     *
+     * @param imageId 图片主键
+     * @return 该图片的base64编码
+     */
+    private String reloadImageById(String imageId) {
+        //TODO 这里临时写成这样
+        return imageId;
     }
 }
