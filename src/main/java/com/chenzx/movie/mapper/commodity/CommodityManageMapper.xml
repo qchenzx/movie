@@ -4,6 +4,7 @@
 
     <select id="getCommodityInfo" resultMap="getCommodityInfoMap">
         select i.id,
+               i.sales_volume,
                i.name,
                c.author,
                c.content,
@@ -25,6 +26,7 @@
     <resultMap id="getCommodityInfoMap" type="com.chenzx.movie.entity.commodity.CommodityInfo">
         <id column="id" property="mallId"/>
         <result column="name" property="name"/>
+        <result column="sales_volume" property="salesVolume"/>
         <result column="minimum_unit_price" property="minimumUnitPrice"/>
         <collection property="comments" ofType="com.chenzx.movie.entity.commodity.CommodityComment">
             <result column="author" property="author"/>

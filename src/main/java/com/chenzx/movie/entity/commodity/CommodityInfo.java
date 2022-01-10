@@ -37,6 +37,12 @@ public class CommodityInfo {
     private List<String> images;
 
     /**
+     * 商品销量
+     */
+    @ApiModelProperty(value = "商品销量")
+    private Integer salesVolume;
+
+    /**
      * 商品规格
      */
     @ApiModelProperty(value = "商品规格")
