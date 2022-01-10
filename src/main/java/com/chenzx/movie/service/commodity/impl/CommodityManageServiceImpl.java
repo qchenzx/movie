@@ -4,14 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chenzx.movie.config.exception.BusException;
-import com.chenzx.movie.entity.commodity.CommodityDescribe;
-import com.chenzx.movie.entity.commodity.CommodityDescribeParam;
-import com.chenzx.movie.entity.commodity.CommodityInfo;
-import com.chenzx.movie.entity.commodity.MallType;
+import com.chenzx.movie.entity.commodity.*;
 import com.chenzx.movie.mapper.commodity.CommodityManageMapper;
+import com.chenzx.movie.mapper.commodity.MallImageMapper;
 import com.chenzx.movie.mapper.commodity.MallTypeMapper;
 import com.chenzx.movie.service.commodity.ICommodityManageService;
 import com.chenzx.movie.service.commodity.constant.QueryRankValueEnum;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,12 +36,33 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
     private CommodityManageMapper commodityManageMapper;
     @Autowired
     private MallTypeMapper mallTypeMapper;
+    @Autowired
+    private MallImageMapper mallImageMapper;
     @Value("${local-file.mall-path}")
     private String mallImagePath;
 
     @Override
     public CommodityInfo getCommodityInfo(Long infoId) {
-        return commodityManageMapper.getCommodityInfo(infoId);
+        CommodityInfo commodityInfo = commodityManageMapper.getCommodityInfo(infoId);
+        // TODO 此处待重构,需要增加商品详情页的展示图片、每个规格下的展示图片、商品主题
+        // TODO 当前逻辑为获取所有与该商品有关的图片,不管是主图还是其他图片
+        List<MallImage> mallImages = mallImageMapper.selectList(
+                new LambdaQueryWrapper<MallImage>().eq(MallImage::getInfoId, commodityInfo.getMallId()));
+        commodityInfo.setImages(Lists.newArrayList());
+        List<String> images = commodityInfo.getImages();
+        try {
+            for (MallImage image : mallImages) {
+                if (image.getIsMainGraph()) {
+                    images.add(0, reloadImageById(image.getId()));
+                } else {
+                    images.add(reloadImageById(image.getId()));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BusException("静态资源读取失败,请刷新页面后重新尝试");
+        }
+        return commodityInfo;
     }
 
     @Override

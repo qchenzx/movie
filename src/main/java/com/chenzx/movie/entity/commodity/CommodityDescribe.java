@@ -32,10 +32,15 @@ public class CommodityDescribe {
     private String unitPrice;
 
     /**
+     * 商品销量
+     */
+    @ApiModelProperty(value = "商品销量")
+    private Long salesVolume;
+
+    /**
      * base64格式的商品主图
      */
     @ApiModelProperty(value = "base64格式的商品主图")
     private String base64Image;
-
 
 }

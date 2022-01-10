@@ -33,6 +33,9 @@ public class CommodityInfo {
     @ApiModelProperty(value = "商品最低单价")
     private Double minimumUnitPrice;
 
+    @ApiModelProperty(value = "商品图片")
+    private List<String> images;
+
     /**
      * 商品规格
      */
