@@ -50,4 +50,13 @@ public interface ICommodityManageService {
      */
     List<ShopCartInfo> getShopCartContentByUser(IUser user);
 
+    /**
+     * 添加商品到购物车中
+     *
+     * @param param 商品信息
+     * @param user  用户对象
+     * @return 结果提示
+     */
+    String addCommodityToCart(AddCommodityToCartParam param, IUser user);
+
 }

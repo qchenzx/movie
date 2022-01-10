@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.commodity.*;
 import com.chenzx.movie.entity.sys.IUser;
-import com.chenzx.movie.mapper.commodity.CommodityManageMapper;
-import com.chenzx.movie.mapper.commodity.MallImageMapper;
-import com.chenzx.movie.mapper.commodity.MallTypeMapper;
+import com.chenzx.movie.mapper.commodity.*;
 import com.chenzx.movie.service.commodity.ICommodityManageService;
 import com.chenzx.movie.service.commodity.constant.QueryRankValueEnum;
 import com.google.common.collect.Lists;
@@ -39,6 +37,12 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
     private MallTypeMapper mallTypeMapper;
     @Autowired
     private MallImageMapper mallImageMapper;
+    @Autowired
+    private MallInfoMapper mallInfoMapper;
+    @Autowired
+    private MallSpecificationsMapper mallSpecificationsMapper;
+    @Autowired
+    private MallShoppingCartMapper mallShoppingCartMapper;
     @Value("${local-file.mall-path}")
     private String mallImagePath;
 
@@ -122,6 +126,22 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
 
         }
         return shopCartContent;
+    }
+
+    @Override
+    public String addCommodityToCart(AddCommodityToCartParam param, IUser user) {
+        MallInfo mallInfo = mallInfoMapper.selectById(param.getCommodityId());
+        MallSpecifications mallSpecifications = mallSpecificationsMapper.selectById(param.getSpecificationsId());
+        if (mallInfo == null || mallSpecifications == null) {
+            throw new BusException("商品信息或规格信息错误,请检查后重新尝试!");
+        }
+        MallShoppingCart mallShoppingCart = new MallShoppingCart();
+        mallShoppingCart.setCommodityId(mallInfo.getId());
+        mallShoppingCart.setSpecificationsId(mallSpecifications.getId());
+        mallShoppingCart.setTotal(1);
+        mallShoppingCart.setUserId(user.getId());
+        mallShoppingCartMapper.insert(mallShoppingCart);
+        return "success";
     }
 
     /**
