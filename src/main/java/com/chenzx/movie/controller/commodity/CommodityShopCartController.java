@@ -37,7 +37,7 @@ public class CommodityShopCartController {
 
     @ApiOperation(value = "添加商品到购物车中")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "param", value = "要添加到购物车的商品")
+            @ApiImplicitParam(name = "param", value = "要添加到购物车的商品", paramType = "body", dataType = "AddCommodityToCartParam")
     })
     @PostMapping
     public String addCommodityToCart(@RequestBody @Valid AddCommodityToCartParam param
