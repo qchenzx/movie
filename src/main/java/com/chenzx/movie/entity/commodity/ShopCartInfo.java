@@ -14,6 +14,12 @@ import lombok.Data;
 public class ShopCartInfo {
 
     /**
+     * 购物车商品主键
+     */
+    @ApiModelProperty("购物车商品主键")
+    private Long shopCartId;
+
+    /**
      * 商品主键
      */
     @ApiModelProperty("商品主键")
