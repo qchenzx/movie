@@ -2,10 +2,8 @@ package com.chenzx.movie.service.commodity;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.chenzx.movie.entity.commodity.CommodityDescribe;
-import com.chenzx.movie.entity.commodity.CommodityDescribeParam;
-import com.chenzx.movie.entity.commodity.CommodityInfo;
-import com.chenzx.movie.entity.commodity.MallType;
+import com.chenzx.movie.entity.commodity.*;
+import com.chenzx.movie.entity.sys.IUser;
 
 import java.util.List;
 
@@ -43,5 +41,13 @@ public interface ICommodityManageService {
      * @return 分类列表
      */
     List<MallType> getCommodityClassification(Integer rank, Long typeId);
+
+    /**
+     * 查询用户的购物车中存放的商品
+     *
+     * @param user 用户对象
+     * @return 购物车中的商品
+     */
+    List<ShopCartInfo> getShopCartContentByUser(IUser user);
 
 }

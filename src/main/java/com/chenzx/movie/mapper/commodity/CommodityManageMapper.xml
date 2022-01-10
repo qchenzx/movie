@@ -63,5 +63,22 @@
         </where>
     </select>
 
+    <select id="getShopCartContentByUser" resultMap="getShopCartContentByUserMap">
+        select cart.commodity_id, info.name as comm_name, spec.unit_price, spec.name, spec.id, cart.total
+        from mall_shopping_cart as cart
+                 left join mall_info as info on cart.commodity_id = info.id
+                 left join mall_specifications as spec on cart.specifications_id = spec.id
+        where cart.user_id = #{id}
+    </select>
+
+    <resultMap id="getShopCartContentByUserMap" type="com.chenzx.movie.entity.commodity.ShopCartInfo">
+        <result column="commodity_id" property="commodityId"/>
+        <result column="comm_name" property="commodityName"/>
+        <result column="unit_price" property="unitPrice"/>
+        <result column="name" property="specificationsName"/>
+        <result column="id" property="specificationsId"/>
+        <result column="total" property="total"/>
+    </resultMap>
+
 
 </mapper>

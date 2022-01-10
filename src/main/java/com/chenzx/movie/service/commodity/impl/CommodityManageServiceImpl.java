@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chenzx.movie.config.exception.BusException;
 import com.chenzx.movie.entity.commodity.*;
+import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.mapper.commodity.CommodityManageMapper;
 import com.chenzx.movie.mapper.commodity.MallImageMapper;
 import com.chenzx.movie.mapper.commodity.MallTypeMapper;
@@ -100,6 +101,27 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
             wrapper.eq(MallType::getParentId, typeId);
         }
         return mallTypeMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<ShopCartInfo> getShopCartContentByUser(IUser user) {
+        List<ShopCartInfo> shopCartContent = commodityManageMapper.getShopCartContentByUser(user);
+        for (ShopCartInfo shopCartInfo : shopCartContent) {
+            MallImage mallImage = mallImageMapper.selectOne(new LambdaQueryWrapper<MallImage>()
+                    .eq(MallImage::getInfoId, shopCartInfo.getCommodityId())
+                    .eq(MallImage::getSpecificationsId, shopCartInfo.getSpecificationsId()));
+            if (mallImage == null) {
+                throw new BusException("未找到静态资源,请刷新页面后重试");
+            }
+            try {
+                shopCartInfo.setImage(reloadImageById(mallImage.getId()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new BusException("读取图片资源异常,请刷新页面后重试");
+            }
+
+        }
+        return shopCartContent;
     }
 
     /**

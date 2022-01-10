@@ -40,6 +40,11 @@ mybatis-plus:
       logic-delete-field: del_flag
       logic-delete-value: 1
       logic-not-delete-value: 0
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 #logging:
 #  level:
 #    com.chenzx.movie.mapper.*: debug
