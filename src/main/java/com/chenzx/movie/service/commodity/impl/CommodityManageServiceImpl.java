@@ -58,6 +58,15 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
                     images.add(reloadImageById(image.getId()));
                 }
             }
+
+            for (CommoditySpecifications item : commodityInfo.getSpecifications()) {
+                MallImage specificationsImage = mallImageMapper.selectOne(
+                        new LambdaQueryWrapper<MallImage>()
+                                .eq(MallImage::getInfoId, commodityInfo.getMallId())
+                                .eq(MallImage::getSpecificationsId, item.getSpecificationsId()));
+                item.setImage(reloadImageById(specificationsImage.getId()));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new BusException("静态资源读取失败,请刷新页面后重新尝试");

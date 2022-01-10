@@ -24,4 +24,7 @@ public class CommoditySpecifications {
      */
     @ApiModelProperty(value = "商品单价(积分)")
     private Double unitPrice;
+
+    @ApiModelProperty(value = "商品规格图片")
+    private String image;
 }
