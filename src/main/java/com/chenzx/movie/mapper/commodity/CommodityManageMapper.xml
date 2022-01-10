@@ -39,7 +39,7 @@
     </resultMap>
 
     <select id="getCommodityDesc" resultType="com.chenzx.movie.entity.commodity.CommodityDescribe">
-        select i.id,
+        select distinct i.id,
         i.sales_volume,
         i.name,
         image.id as base64Image,
