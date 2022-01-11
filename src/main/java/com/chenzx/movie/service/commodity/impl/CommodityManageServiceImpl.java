@@ -135,10 +135,22 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
         if (mallInfo == null || mallSpecifications == null) {
             throw new BusException("商品信息或规格信息错误,请检查后重新尝试!");
         }
+        MallShoppingCart cart = mallShoppingCartMapper.selectOne(new LambdaQueryWrapper<MallShoppingCart>()
+                .eq(MallShoppingCart::getCommodityId, param.getCommodityId())
+                .eq(MallShoppingCart::getSpecificationsId, param.getSpecificationsId())
+                .eq(MallShoppingCart::getUserId, user.getId()));
+        if (cart != null) {
+            if (cart.getTotal() + param.getAmount() > 200) {
+                throw new BusException("购物车中最多存放200件商品");
+            }
+            cart.setTotal(cart.getTotal() + param.getAmount());
+            mallShoppingCartMapper.updateById(cart);
+            return "success";
+        }
         MallShoppingCart mallShoppingCart = new MallShoppingCart();
         mallShoppingCart.setCommodityId(mallInfo.getId());
         mallShoppingCart.setSpecificationsId(mallSpecifications.getId());
-        mallShoppingCart.setTotal(1);
+        mallShoppingCart.setTotal(param.getAmount());
         mallShoppingCart.setUserId(user.getId());
         mallShoppingCartMapper.insert(mallShoppingCart);
         return "success";
