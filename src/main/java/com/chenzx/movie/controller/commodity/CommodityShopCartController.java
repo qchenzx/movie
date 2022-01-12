@@ -51,7 +51,7 @@ public class CommodityShopCartController {
             @ApiImplicitParam(name = "param", value = "要删除的购物车中商品的描述信息", paramType = "body", dataType = "DeleteShopCartParam")
     })
     @DeleteMapping
-    public String deleteCommodityForCart(@RequestBody @Valid DeleteShopCartParam param, @AuthenticationPrincipal IUser user) {
+    public String deleteCommodityForCart(@RequestBody @Valid DeleteShopCartParam param, @ApiIgnore @AuthenticationPrincipal IUser user) {
         return commodityManageService.deleteCommodityFromCart(param, user);
     }
 
