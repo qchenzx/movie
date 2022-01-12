@@ -156,6 +156,18 @@ public class CommodityManageServiceImpl implements ICommodityManageService {
         return "success";
     }
 
+    @Override
+    public String deleteCommodityFromCart(DeleteShopCartParam param, IUser user) {
+        for (Long cartId : param.getShopCartIds()) {
+            MallShoppingCart mallShoppingCart = mallShoppingCartMapper.selectById(cartId);
+            if (mallShoppingCart == null || mallShoppingCart.getUserId().equals(user.getId())) {
+                throw new BusException("购物车中没有id为" + cartId + "的商品");
+            }
+            mallShoppingCartMapper.deleteById(cartId);
+        }
+        return "success";
+    }
+
     /**
      * 通过图片主键查找图片,并将图片转换为base64编码返回
      *

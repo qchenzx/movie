@@ -1,6 +1,7 @@
 package com.chenzx.movie.controller.commodity;
 
 import com.chenzx.movie.entity.commodity.AddCommodityToCartParam;
+import com.chenzx.movie.entity.commodity.DeleteShopCartParam;
 import com.chenzx.movie.entity.commodity.ShopCartInfo;
 import com.chenzx.movie.entity.sys.IUser;
 import com.chenzx.movie.service.commodity.ICommodityManageService;
@@ -46,10 +47,12 @@ public class CommodityShopCartController {
     }
 
     @ApiOperation(value = "删除购物车中的商品")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "param", value = "要删除的购物车中商品的描述信息", paramType = "body", dataType = "DeleteShopCartParam")
+    })
     @DeleteMapping
-    public void deleteCommodityForCart() {
-
+    public String deleteCommodityForCart(@RequestBody @Valid DeleteShopCartParam param, @AuthenticationPrincipal IUser user) {
+        return commodityManageService.deleteCommodityFromCart(param, user);
     }
-
 
 }

@@ -59,4 +59,13 @@ public interface ICommodityManageService {
      */
     String addCommodityToCart(AddCommodityToCartParam param, IUser user);
 
+    /**
+     * 从购物车中删除商品,支持批量删除
+     *
+     * @param param 要删除的购物车商品id
+     * @param user  用户对象
+     * @return 删除结果提示
+     */
+    String deleteCommodityFromCart(DeleteShopCartParam param, IUser user);
+
 }
